@@ -1,0 +1,71 @@
+﻿@model List<Question>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+    <body>
+
+    <table class="table" id="sortable-table">
+        <thead class="table-success">
+            <tr>
+                <th>Sıra</th>
+                <th>Soru</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+           
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr draggable="true" ondragstart="drag(event)">
+                    <td class="order">@(i + 1)</td>
+                    <td>@Model[i].Description</td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+
+
+
+
+    <script>
+        const rows = document.querySelectorAll('#sortable-table tbody tr');
+        let dragStartIndex;
+
+        function drag(e) {
+            dragStartIndex = +e.target.querySelector('.order').innerText;
+            e.dataTransfer.setData('text/plain', null);
+        }
+
+        function allowDrop(e) {
+            e.preventDefault();
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            const dragEndIndex = +e.target.querySelector('.order').innerText;
+            swapRows(dragStartIndex, dragEndIndex);
+        }
+
+        function swapRows(fromIndex, toIndex) {
+            const rowA = rows[fromIndex].cloneNode(true);
+            const rowB = rows[toIndex].cloneNode(true);
+            rows[fromIndex].parentNode.replaceChild(rowB, rows[fromIndex]);
+            rows[toIndex].parentNode.replaceChild(rowA, rows[toIndex]);
+        }
+        rows.forEach(row => {
+            row.
+                ro
+            addEventListener('dragstart', drag);
+            row.addEventListener('dragover', allowDrop);
+            row.addEventListener('drop', drop);
+        });
+    </script>
+    </body>

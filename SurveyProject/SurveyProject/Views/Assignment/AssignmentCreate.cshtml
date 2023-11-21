@@ -1,0 +1,24 @@
+﻿@model SurveyProject.Models.DTOs.UserAssignment
+
+
+
+<body>
+    <div class="row">
+        <form asp-controller="Assignment" asp-action="AssignmentCreate" method="post">
+            <input type="hidden" name="SurveyId" value="@Model.SurveyId" id="Id" />
+            <div class="form-group">
+                <label for="UserId">Kullanıcı</label>
+                <select class="form-control" name="UserId" id="UserId">
+                    @foreach (var item in Model.Users)
+                    {
+                        <option value="@item.Id">@item.UserName</option>
+                    }
+                </select>
+
+            </div>
+
+            <button type="submit" name="AssignmentCreate" class="btn btn-primary">Kaydet</button>
+        </form>
+
+    </div>
+</body>
